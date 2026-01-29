@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { getLeaderboard, getUserRank, type LeaderboardType, type LeaderboardEntry } from '@/lib/leaderboards';
 
 interface LeaderboardScreenProps {
-  onBack: () => void;
+  onBack?: () => void;
 }
 
 const LEADERBOARD_TABS: { id: LeaderboardType; label: string; icon: typeof Trophy; color: string }[] = [
@@ -14,7 +14,7 @@ const LEADERBOARD_TABS: { id: LeaderboardType; label: string; icon: typeof Troph
   { id: 'games', label: 'Game Scores', icon: Gamepad2, color: 'from-blue-500 to-cyan-500' },
 ];
 
-export function LeaderboardScreen({ onBack }: LeaderboardScreenProps) {
+export function LeaderboardScreen({ onBack }: LeaderboardScreenProps = {}) {
   const [activeTab, setActiveTab] = useState<LeaderboardType>('total_xp');
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -68,26 +68,28 @@ export function LeaderboardScreen({ onBack }: LeaderboardScreenProps) {
   const activeTabConfig = LEADERBOARD_TABS.find(t => t.id === activeTab)!;
 
   return (
-    <div className="min-h-screen bg-[#0A0E27]">
-      {/* Header */}
-      <div className="sticky top-0 z-10 bg-[#0A0E27]/95 backdrop-blur-sm border-b border-white/5 px-4 py-4">
-        <div className="flex items-center justify-between">
-          <button
-            onClick={onBack}
-            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 text-white" />
-          </button>
-          <h1 className="text-white font-bold text-lg">Leaderboards</h1>
-          <button
-            onClick={loadLeaderboard}
-            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
-            disabled={loading}
-          >
-            <RefreshCw className={cn("w-5 h-5 text-white", loading && "animate-spin")} />
-          </button>
+    <div className={onBack ? "min-h-screen bg-[#0A0E27]" : ""}>
+      {/* Header - only show if onBack is provided (modal mode) */}
+      {onBack && (
+        <div className="sticky top-0 z-10 bg-[#0A0E27]/95 backdrop-blur-sm border-b border-white/5 px-4 py-4">
+          <div className="flex items-center justify-between">
+            <button
+              onClick={onBack}
+              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5 text-white" />
+            </button>
+            <h1 className="text-white font-bold text-lg">Leaderboards</h1>
+            <button
+              onClick={loadLeaderboard}
+              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+              disabled={loading}
+            >
+              <RefreshCw className={cn("w-5 h-5 text-white", loading && "animate-spin")} />
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="p-4 space-y-4">
         {/* Tab Navigation */}
