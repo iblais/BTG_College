@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, FileText, Video, Users, ChevronDown, BookOpen, Send, Loader2, Lock, Play, ExternalLink } from 'lucide-react';
+import { ArrowLeft, CheckCircle, FileText, Users, ChevronDown, BookOpen, Send, Loader2, Lock, ExternalLink } from 'lucide-react';
 import * as Accordion from '@radix-ui/react-accordion';
 import { GlassCard } from './ui/GlassCard';
 import { ProgressBar } from './ui/ProgressBar';
@@ -6444,8 +6444,6 @@ You've completed this program - now go build the life you want.`,
 
   const getSectionIcon = (type: string) => {
     switch (type) {
-      case 'video':
-        return Video;
       case 'interactive':
         return Users;
       case 'reading':
@@ -6530,31 +6528,6 @@ You've completed this program - now go build the life you want.`,
             <h3 className="text-white font-bold">{currentSectionData.title}</h3>
             <span className="text-white/40 text-xs">{currentSectionData.duration}</span>
           </div>
-        </div>
-
-        {/* Video Player - YouTube Embed or Placeholder */}
-        <div className="mb-6 rounded-xl overflow-hidden border border-white/10">
-          {currentSectionData.videoUrl ? (
-            <iframe
-              key={currentSectionData.videoUrl}
-              className="w-full aspect-video"
-              src={`https://www.youtube.com/embed/${currentSectionData.videoUrl}`}
-              title={currentSectionData.title}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
-          ) : (
-            <div className="w-full aspect-video flex items-center justify-center bg-gradient-to-br from-[#1a1f3e] to-[#0d1025] border border-white/20 rounded-xl">
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-[#4A5FFF]/30 flex items-center justify-center mx-auto mb-3">
-                  <Play size={32} className="text-[#4A5FFF]" />
-                </div>
-                <p className="text-white font-semibold">Lesson Video</p>
-                <p className="text-white/60 text-sm mt-1">Coming Soon</p>
-              </div>
-            </div>
-          )}
         </div>
 
         <div className="mb-6">

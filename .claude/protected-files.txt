@@ -1,0 +1,2 @@
+src/components/LessonScreen.tsx
+src/components/QuizScreen.tsx
